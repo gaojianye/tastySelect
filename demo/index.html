@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>StyleSelect</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="styles/css/style.css">
+	<link rel="stylesheet" href="styles/css/tastySelect.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" />
+</head>
+<body>
+	<div class="preview-header">
+		<div class="content">
+			<h1>tastySelect</h1>
+			<p>Плагин для стилизации <span>select</span> без зависимостей.</p>
+		</div>
+	</div>
+	<div class="main">
+		<div class="background">
+			<div class="content">
+				<h2>И сразу же пример!</h2>
+				<select name="" id="tastySelect" multiple>
+					<optgroup label="Фрукты">
+						<option value="Pomelo">Помело</option>
+						<option value="Orange">Апельсин</option>
+						<option value="Apple">Яблоко</option>
+					</optgroup>
+					<optgroup label="Овощи">
+						<option value="Tomato">Помидор</option>
+						<option value="Potato">Картошка</option>
+						<option value="Cucumber">Огурец</option>
+					</optgroup>
+					<option value="Whatever">Дай что-нибудь мне</option>
+					<option value="Water">Хотя бы водички</option>
+				</select>
+			</div>
+			<div class="content">
+				<p class="text">На мобилках будет вызван нативный обработчик, а на компьютерах нормальный, красивый селект.<br>Запуск плагина в этом случае выглядит так:</p>
+				<p class="code">tastySelect({
+	defaultText: "Можешь выбрать покушать! (Ctrl+Click)",
+	mobileFix: false,
+});</p>
+				<p class="text info">Стилизовать можно вообще как угодно!</p>
+				<ul class="styling">
+					<li><input type="radio" checked data-class='future' name="styling" id="r1"><label for="r1">Странности</label></li>
+					<li><input type="radio" data-class='jelly' name="styling" id="r2"><label for="r2">Больше странностей</label></li>
+				</ul>
+				<p class="text info">Структура одна, я просто меняю класс! Прекрасно стилизуется :з <br> Вообще-то хотел сделать больше стилей, но стало лень.</p>
+				<br>
+				<p class="text warning">Скачивай скорее прямо из печи! Достаточно всего лишь подключить скрипт на страницу и вызвать функцию! Где такое видано? (тссс.. Я знаю что везде)</p>
+				<p class="button-outer"><a href="https://github.com/jekyenin/tastySelect/archive/master.zip" class="button">Скачать :з</a><a href="https://github.com/jekyenin/tastySelect" class="button">Отправиться на GitHub!</a></p>
+			</div>
+			<div class="content">
+				<h2>Структура HTML</h2>
+				<p class="text">На самом деле не представляю как нормально объяснить структуру) <br>
+				<b><span>classes.whatever</span></b> - Это класс, который мы передали в настройках. Например для <span>classes.outer</span> по умолчанию задано <span>"style-select"</span>. Все классы указанные по умолчанию можно посмотреть <a href="#classes">здесь</a></p>
+				<pre class='code_html'>
+<span>&lt;div</span> class=<span class="class">classes.outer</span><span>&gt;</span>
+<span class="comment">Оболочка для стилизации и селекта</span>
+	<span>&lt;div</span> class=<span class="class">classes.title</span><span>&gt;&lt;/div&gt;</span>
+	<span class="comment">Видимая часть (если выпадашка скрыта)</span>
+	<span>&lt;div</span> class=<span class="class">classes.options</span><span>&gt;</span>
+	<span class="comment">Общий блок для элементов</span>
+		<span>&lt;ul</span> class=<span class="class">classes.list</span><span>&gt;</span>
+			<span class="comment">Такой список используется для элементов без подгруппы</span>
+			<span>&lt;li</span> class=<span class="class">classes.option</span> attributes<span class="class">.value</span> attributes<span class="class">.index</span><span>&gt;&lt;/li&gt;</span>
+			<span class="comment">Сам элемент. attributes.index - позиция элемента в select, attributes.value - значение оригинального option</span>
+		<span>&lt;/ul&gt;</span>
+		<span>&lt;ul</span> class=<span class="class">classes.optgroup</span><span>&gt;</span>
+		<span class="comment">Такой список используется для элементов подгруппы</span>
+			<span>&lt;li</span> class=<span class="class">classes.label</span><span>&gt;&lt;/li&gt;</span>
+			<span class="comment">Заголовок для подгруппы. Значение берется из атрибута label тега optgroup</span>
+			<span>&lt;li</span> class=<span class="class">classes.option</span> attributes<span class="class">.value</span> attributes<span class="class">.index</span><span>&gt;&lt;/li&gt;</span>
+			<span class="comment">Сам элемент. attributes.index - позиция элемента в select, attributes.value - значение оригинального option</span>
+		<span>&lt;/ul&gt;</span>
+	<span>&lt;/div&gt;</span>
+	<span>&lt;select&gt;</span>...<span>&lt;/select&gt;</span>
+	<span class="comment">Оригинальный select. Разумеется его стоит скрыть в css.</span>
+<span>&lt;/div&gt;</span></pre>
+			</div>
+			<div class="content">
+				<h2>Мобильный фолбэк</h2>
+				<p class="text">На мобилках все дурацко. Пропадает смысл такой стилизации и я предлагаю нагладывать прозрачный <span>select</span> на нашу стилизацию. Селект продолжит работать, только вместо выпадашки будет нативный выбор. Дело ваше.</p>
+				<pre class="code_html">
+<span class="class">(classes.outer).(classes.mobile) select</span><span>{</span>
+	position: <span>absolute</span>;
+	width: <span>100%</span>;
+	height: <span>100%</span>;
+	top: <span>0</span>;
+	left: <span>0</span>;
+	z-index: <span>10</span>;
+	opacity: <span>0</span>;
+<span>}</span></pre>
+				<p class="text">При тестах заметил интересное. Мобилка не дает выбрать <span>первый option</span> при множественном выборе. Написал решалку для этой штуки, <span>по умолчанию она чинится</span>. Что бы <span>отключить</span> нужно передать в настройках следующее:</p>
+				<p class="code">tastySelect({
+	mobileFix: false,
+});</p>
+			</div>
+			<div class="content">
+				<h2>APIшечка</h2>
+				<p class="text">Вообще все <b>настройки</b> передаются при вызове в объекте.</p>
+				<div class="table">
+					<table>
+						<tr>
+							<th>Свойство</th>
+							<th>Значение</th>
+						</tr>
+						<tr>
+							<td>selector</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Селетор элементов, которые надо обработать</p>
+								<p class="default">Значение по умолчанию: <span>'select'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>mobileFix</td>
+							<td>
+								<p class="type">Boolean</p>
+								<p class="descr">Данный флаг позволяет сделать первый элемент активным для выбора. Обычно на мобилках это не работает</p>
+								<p class="default">Значение по умолчанию: <span>true</span></p>	
+							</td>
+						</tr>
+						<tr>
+							<td>mask</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Это маска для отображения выбранных элементов.<br> Знак $ - количество элементов, % - перечисление выбранных элементов</p>
+								<p class="default">Значение по умолчанию: <span>'%'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>maskJoin</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Если у нас в маске указано перечисление, то соединяться оно будет этой строкой</p>
+								<p class="default">Значение по умолчанию: <span>', '</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>defaultText</td>
+							<td>
+								<p class="type">Sctring</p>
+								<p class="descr">Если поле не выбрано, то отображаться будет этот текст</p>
+								<p class="default">Значение по умолчанию: <span>'Select item...'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>classes</td>
+							<td>
+								<p class="type">Object</p>
+								<p class="descr">В данный объект передаются классы по ключам, объяснение <a href="#classes">дальше</a></p>
+								<p class="default">Значение по умолчанию: <span>{..Перечисление классов..}</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>attributes</td>
+							<td>
+								<p class="type">Object</p>
+								<p class="descr">В данный объект передаются атрибуты по ключам, объяснение <a href="#attributes">дальше</a></p>
+								<p class="default">Значение по умолчанию: <span>{..Перечисление атрибутов..}</span></p>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<a name="classes" href="#"></a>
+				<p class="text"><b>Классы</b> настраиваются именно так:</p>
+				<div class="table">
+					<table>
+						<tr>
+							<th>Свойство</th>
+							<th>Значение</th>
+						</tr>
+						<tr>
+							<td>outer</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Родитель всех родителей, внутри него все ( структура + select )</p>
+								<p class="default">Значение по умолчанию: <span>'style-select'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>title</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">"Кнопка" селекта. В общем это видимая часть селекта без выпадашки</p>
+								<p class="default">Значение по умолчанию: <span>'style-select-title'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>options</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Выпадашка</p>
+								<p class="default">Значение по умолчанию: <span>'style-select-options'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>optgroup</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Если в select есть группы optgroup, то элементы группы попадут в список с этим классом</p>
+								<p class="default">Значение по умолчанию: <span>'style-select-optgroup'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>list</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Если элементы висят без группы, то у списка будет этот класс</p>
+								<p class="default">Значение по умолчанию: <span>'style-select-list'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>label</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Если есть группа, то ее заголовок поместится в li с этим классом</p>
+								<p class="default">Значение по умолчанию: <span>'style-select-label'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>item</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Класс для элемента списка</p>
+								<p class="default">Значение по умолчанию: <span>'style-select-option'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>open</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Данный класс добавляется к родительскому блоку, если выпадашка открыта</p>
+								<p class="default">Значение по умолчанию: <span>'st_open'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>selected</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Этот класс добавляется к элементу списка, если он выбран</p>
+								<p class="default">Значение по умолчанию: <span>'st_selected'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>mobile</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Класс добавляется к родительскому блоку, если это мобилка</p>
+								<p class="default">Значение по умолчанию: <span>'is_mobile'</span></p>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<a name="attributes" href="#"></a>
+				<p class="text"><b>Атрибуты</b>, вдруг пригодятся:</p>
+				<div class="table">
+					<table>
+						<tr>
+							<th>Свойство</th>
+							<th>Значение</th>
+						</tr>
+						<tr>
+							<td>index</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Атрибут добавляется к элементу списка, а значением будет его оригинальная позиция в select</p>
+								<p class="default">Значение по умолчанию: <span>'data-index'</span></p>
+							</td>
+						</tr>
+						<tr>
+							<td>value</td>
+							<td>
+								<p class="type">String</p>
+								<p class="descr">Атрибут добавляется к элементу списка, значение - оригинальный value</p>
+								<p class="default">Значение по умолчанию: <span>'data-value'</span></p>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="content footer">
+				<p>2017 <a href="http://evgenin.ru">evgenin.ru</a></p>
+			</div>
+		</div>
+	</div>
+	
+	<a class="github-fork-ribbon" href="https://github.com/jekyenin/tastySelect" title="Fork me on GitHub">Fork me on GitHub</a>
+	<script src='scripts/tastySelect.min.js'></script>
+	<script src='scripts/common.js'></script>
+</body>
+</html>
