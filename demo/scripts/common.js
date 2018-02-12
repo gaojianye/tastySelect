@@ -62,7 +62,9 @@ function inputCheck(elem){
 		isMobile=select.classList.contains('is_mobile')?'is_mobile':'';
 
 	select.setAttribute('class','');
-	select.classList.add('style-select', className);
+	console.log(className)
+	select.classList.add('style-select');
+	select.classList.add(className);
 	if(isMobile){
 		select.classList.add(isMobile);
 	}

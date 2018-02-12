@@ -97,7 +97,7 @@ body:before {
   border-bottom-color: transparent;
 }
 .content.footer {
-  margin-bottom: 1em;
+  padding-bottom: 1em;
 }
 .styling {
   list-style: none;
@@ -114,10 +114,8 @@ body:before {
   display: inline-block;
   padding-left: 20px;
   line-height: 16px;
-  background: linear-gradient(#72B6FF, #a872ff);
+  color: #a872ff;
   font-weight: bold;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 .styling label:before,
 .styling label:after {

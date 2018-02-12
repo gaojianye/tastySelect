@@ -223,9 +223,7 @@
 .style-select.jelly .style-select-option,
 .style-select.jelly .style-select-label {
   position: relative;
-  background: linear-gradient(45deg, #a872ff, #72B6FF);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #72B6FF;
   display: inline-block;
 }
 .style-select.jelly .style-select-label {

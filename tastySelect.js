@@ -251,22 +251,22 @@
 		var browser = {
 			Android: function() {
 				return navigator.userAgent.match(/Android/i) ? 'android' : false;
-		    },
-		    BlackBerry: function() {
+			},
+			BlackBerry: function() {
 				return navigator.userAgent.match(/BlackBerry/i) ? 'blackberry' : false;
-		    },
-		    iOS: function() {
+			},
+			iOS: function() {
 				return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? 'ios' : false;
-		    },
-		    Opera: function() {
+			},
+			Opera: function() {
 				return navigator.userAgent.match(/Opera Mini/i) ? 'operamini' : false;
-		    },
-		    Windows: function() {
+			},
+			Windows: function() {
 				return navigator.userAgent.match(/IEMobile/i) ? 'ie' : false;
-		    },
-		    any: function(){
-		    	return ( browser.Android() || browser.BlackBerry() || browser.iOS() || browser.Opera() || browser.Windows() );
-		    }
+			},
+			any: function(){
+				return ( browser.Android() || browser.BlackBerry() || browser.iOS() || browser.Opera() || browser.Windows() );
+			}
 		};
 		return browser;
 	}
@@ -276,5 +276,21 @@
 
 	window.tastySelect = start;
 })(window);
-
-// Если селектор совпадает, то стреляет 2 раза.
+(function(elem) {
+	var matches = elem.matches || elem.matchesSelector || elem.webkitMatchesSelector || elem.mozMatchesSelector || elem.msMatchesSelector || elem.oMatchesSelector;
+	!matches ? (elem.matches = elem.matchesSelector = function matches(selector) {
+		var matches = document.querySelectorAll(selector);
+		var th = this;
+		return Array.prototype.some.call(matches, function(el) {
+			return el === th;
+		});
+	}) : (elem.matches = elem.matchesSelector = matches);
+})(Element.prototype);
+(function(elem) {
+	elem.closest = elem.closest || function closest(selector) {
+		if (!this) return null;
+		if (this.matches(selector)) return this;
+		if (!this.parentElement) {return null}
+		else return this.parentElement.closest(selector)
+	  };
+}(Element.prototype));
