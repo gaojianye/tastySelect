@@ -40,7 +40,7 @@
 
 		openClass = (userSettings && userSettings.classes && userSettings.classes.open) || defaultSettings.classes.open;
 
-		document.body.addEventListener('click',function(){
+		document.body.addEventListener('click',function(event){
 			var target = event.target.closest('.'+openClass),
 				selects = document.querySelectorAll('.'+openClass);
 			forEachElem(selects, function(elem){
@@ -115,7 +115,7 @@
 				}
 				toggleVisible(elem);
 			}, false);
-			select.addEventListener('change', function(){
+			select.addEventListener('change', function(event){
 				redraw(elem);
 			}, false);
 			drop.addEventListener('click', function(event){
