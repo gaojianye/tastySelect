@@ -6,6 +6,7 @@
 		mobileFix: true,
 		mask: '%', //$ - длина, % - перечисление элементов
 		maskJoin: ', ',
+		ctrlKey: false,
 		defaultText: 'Select item...',
 		classes : {
 			outer: 'style-select',
@@ -17,7 +18,9 @@
 			item: 'style-select-option',
 			open: 'st_open',
 			selected: 'st_selected',
+			disabled: 'st_disabled',
 			mobile: 'is_mobile',
+			multiple: 'is_multiple',
 		},
 		attributes : {
 			index: 'data-index',
@@ -56,6 +59,10 @@
 		var settings, classes, attributes;
 		
 		settings = extend({}, defaultSettings, userSettings);
+
+		if( select.getAttribute('placeholder') ){
+			settings.defaultText = select.getAttribute('placeholder');
+		}
 
 		classes = settings.classes;
 		attributes = settings.attributes;
@@ -103,6 +110,9 @@
 			select.setAttribute( attributes.selectReady , '');
 
 			title.addEventListener('click', function(event){
+				if( select.disabled ){
+					return;
+				}
 				toggleVisible(elem);
 			}, false);
 			select.addEventListener('change', function(){
@@ -119,7 +129,7 @@
 
 				select = outer.querySelector( settings.selector );
 
-				if(select.multiple && event.ctrlKey){
+				if((settings.ctrlKey && select.multiple && event.ctrlKey) || select.multiple){
 					toggleOption(elem, true);
 					return;
 				}
@@ -165,6 +175,12 @@
 
 			if(mobile){
 				addClass(outer, classes.mobile);
+			}
+			if(select.multiple){
+				addClass(outer, classes.multiple);
+			}
+			if(select.disabled){
+				addClass(outer, classes.disabled);
 			}
 
 			outer.appendChild(title);
